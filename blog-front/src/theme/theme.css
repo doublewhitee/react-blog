@@ -1,0 +1,17 @@
+.light-blue {
+  --background-color: #C1D5DC;
+  --sub-background-color: #FFF;
+  --text-color: #363636;
+  --sub-text-color: #535360;
+  --link-color: #FFF;
+  --mode-badge-color: #34343B;
+}
+
+.night {
+  --background-color: #191919;
+  --sub-background-color: #2d2d2d;
+  --text-color: #bfbfc7;
+  --sub-text-color: #898991;
+  --link-color: #1a1a1a;
+  --mode-badge-color: #adbac7;
+}

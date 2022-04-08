@@ -1,0 +1,41 @@
+.drawer-mask {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .3);
+  z-index: 99;
+  .drawer-content {
+    z-index: 100;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--background-color);
+  }
+  .open {
+    animation: open 1s;
+  }
+  .hide {
+    animation: hide 1s;
+  }
+}
+
+@keyframes open {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes hide {
+  0% {
+    transform: none;
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

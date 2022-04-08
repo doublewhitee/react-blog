@@ -1,6 +1,5 @@
 import React, { useEffect, Fragment } from 'react';
 import 'nprogress/nprogress.css'
-import './index.less'
 
 const nprogress = require('nprogress')
 

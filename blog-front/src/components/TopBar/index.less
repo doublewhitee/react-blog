@@ -1,4 +1,36 @@
 .top-bar {
   width: 100%;
-  background-color: #C1D5DC;
+  padding: 20px;
+  background-color: var(--background-color);
+  .top-bar-icon {
+    font-size: 25px;
+    color: var(--text-color);
+    cursor: pointer;
+  }
+  #menu-icon {
+    cursor: pointer;
+    .menu-icon-top, .menu-icon-middle, .menu-icon-bottom {
+      width: 20px;
+      height: 2px;
+      position: relative;
+      background-color: var(--text-color);
+      transition: 200ms;
+    }
+    .menu-icon-middle {
+      margin: 6px 0;
+    }
+  }
+  .menu-icon-close {
+    .menu-icon-top {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+    .menu-icon-middle {
+      opacity: 0;
+    }
+    .menu-icon-bottom {
+      bottom: 8px;
+      transform: rotate(45deg);
+    }
+  }
 }
