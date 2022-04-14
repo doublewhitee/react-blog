@@ -4,12 +4,13 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import './index.less';
 
 import ModeBadge from '../ModeBadge';
+import InlineMenu from '../InlineMenu';
 
 import { userInfo } from '../../config';
 const avatar = require(`../../assets/${userInfo.avatar}`)
 
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_3307767_hzgxhex6clk.js',
+  scriptUrl: '//at.alicdn.com/t/font_3307767_9o41ucoy8as.js',
 })
 
 interface LeftBarProps {
@@ -61,6 +62,10 @@ const LeftBar: React.FC<LeftBarProps> = props => {
             </Col>
           ))
         }
+      </Row>
+
+      <Row>
+        <Col span={24}><InlineMenu /></Col>
       </Row>
     </div>
   );

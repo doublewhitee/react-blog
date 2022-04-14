@@ -85,7 +85,10 @@ const App: React.FC = () => {
           <LeftBar handleDayNightMode={handleDayNightMode} />
         </Col>
         {/* 内容 */}
-        <Col flex="auto" className="app-content" style={{ minHeight: 'calc(100vh - 64px)' }}>
+        <Col
+          flex="auto"
+          className="app-content"
+        >
         <Suspense fallback={<NProgress />}>
           <Routes>
             <Route path="/" element={<Home />} />

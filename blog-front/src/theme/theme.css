@@ -3,8 +3,10 @@
   --sub-background-color: #FFF;
   --text-color: #363636;
   --sub-text-color: #535360;
-  --link-color: #FFF;
+  --link-color: #48606d;
   --mode-badge-color: #34343B;
+  --sub-menu-color: #deecf1;
+  --menu-select-color: #f0f9fd;
 }
 
 .night {
@@ -12,6 +14,8 @@
   --sub-background-color: #2d2d2d;
   --text-color: #bfbfc7;
   --sub-text-color: #898991;
-  --link-color: #1a1a1a;
+  --link-color: #fff;
   --mode-badge-color: #adbac7;
+  --sub-menu-color: #2d2d2d;
+  --menu-select-color: #4d4d4d;
 }
