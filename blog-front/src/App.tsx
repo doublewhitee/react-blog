@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './App.less';
 
@@ -10,17 +10,32 @@ import Drawer from './components/Drawer';
 
 import storage from './utils/storage';
 import { defaultPageTheme } from './config';
-
-const Home = React.lazy(() => import('./pages/Home'));
+import { defaultRoutes, getRoutesInfo } from './config/router';
+import { useAppDispatch } from './redux/hooks';
+import { setRoute } from './redux/reducers/userSlice';
 
 interface Setting {
   isDarkMode: boolean
   theme: string
 }
 
+interface RoutersObj {
+  path: string
+  name?: string
+  title?: string
+  element?: React.LazyExoticComponent<React.FC<{}>>
+  children?: RoutersObj[]
+  redirect?: string
+}
+
 const App: React.FC = () => {
   const [settings, setSettings] = useState<Setting | null>()
   const [isDrawerVisible, setIsDrawerVisible] = useState<boolean>(false)
+  const [routesList, setRoutesList] = useState<JSX.Element[]>([])
+  const location = useLocation()
+  // redux
+  const dispatch = useAppDispatch()
+
   // 进入时根据localstorage选择主题
   useEffect(() => {
     const app = document.getElementById('app')!
@@ -38,6 +53,10 @@ const App: React.FC = () => {
         app.classList.add(setting.theme)
       }
     }
+    // 路由初始化
+    setRoutesList(getRoutes(defaultRoutes, ''))
+    // 路由信息传递给redux
+    dispatch(setRoute(getRoutesInfo(defaultRoutes, '')))
   }, [])
 
   // 修改日间/夜间模式
@@ -54,6 +73,21 @@ const App: React.FC = () => {
       app.classList.remove(setting.theme)
       app.classList.add('night')
     }
+  }
+
+  // get Routes list
+  const getRoutes = (routeList: RoutersObj[], basePath: string) => {
+    let arr: JSX.Element[] = []
+    routeList.forEach(i => {
+      if (i.element) {
+        arr.push(<Route key={basePath + i.path} path={basePath + i.path} element={<i.element />} />)
+      } else if (i.children) {
+        arr.push(...getRoutes(i.children, i.path + basePath))
+      } else if (i.redirect) {
+        arr.push(<Route key={basePath + i.path} path={basePath + i.path} element={() => <Navigate to={i.redirect!} replace />} />)
+      }
+    })
+    return arr
   }
 
   return (
@@ -91,7 +125,9 @@ const App: React.FC = () => {
         >
         <Suspense fallback={<NProgress />}>
           <Routes>
-            <Route path="/" element={<Home />} />
+            {
+              routesList.map(i => i)
+            }
           </Routes>
         </Suspense>
         </Col>
