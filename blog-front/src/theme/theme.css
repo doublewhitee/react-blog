@@ -5,6 +5,7 @@
   --sub-text-color: #535360;
   --link-color: #48606d;
   --mode-badge-color: #34343B;
+  --progress-color: #deecf1;
   --sub-menu-color: #deecf1;
   --menu-select-color: #f0f9fd;
 }
@@ -16,6 +17,7 @@
   --sub-text-color: #898991;
   --link-color: #fff;
   --mode-badge-color: #adbac7;
+  --progress-color: #898991;
   --sub-menu-color: #2d2d2d;
   --menu-select-color: #4d4d4d;
 }

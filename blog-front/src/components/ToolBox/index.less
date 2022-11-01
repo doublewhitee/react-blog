@@ -1,0 +1,50 @@
+#tool-box-wrapper {
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+  z-index: 1000;
+  .tool-box {
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 30px;
+    vertical-align: middle;
+    background-color: var(--background-color);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .move-tool-box {
+    font-size: 16px !important;
+  }
+  .show-box {
+    animation: show-box .5s ease-in;
+  }
+  .hide-box {
+    animation: hide-box .5s ease-out;
+  }
+}
+
+@keyframes show-box {
+  0% {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes hide-box {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+}

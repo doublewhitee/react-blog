@@ -20,7 +20,7 @@ export const defaultRoutes: RoutersObj[] = [
     element: Home
   },
   {
-    path: '',
+    path: '/collect',
     name: '整理',
     children: [
       {

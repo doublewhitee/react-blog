@@ -6,6 +6,7 @@ interface DrawerProps {
   id: string
   visible: boolean
   onClose: Function
+  children?: React.ReactNode
 }
 
 const Drawer: React.FC<DrawerProps> = props => {
@@ -26,7 +27,7 @@ const Drawer: React.FC<DrawerProps> = props => {
     item.classList.add('hide')
     setTimeout(() => {
       onClose()
-    }, 990)
+    }, 590)
   }
 
   return (

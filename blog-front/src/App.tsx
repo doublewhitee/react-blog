@@ -7,6 +7,7 @@ import TopBar from './components/TopBar';
 import LeftBar from './components/LeftBar';
 import NProgress from './components/NProgress';
 import Drawer from './components/Drawer';
+import ToolBox from './components/ToolBox';
 
 import storage from './utils/storage';
 import { defaultPageTheme } from './config';
@@ -32,9 +33,10 @@ const App: React.FC = () => {
   const [settings, setSettings] = useState<Setting | null>()
   const [isDrawerVisible, setIsDrawerVisible] = useState<boolean>(false)
   const [routesList, setRoutesList] = useState<JSX.Element[]>([])
-  const location = useLocation()
   // redux
   const dispatch = useAppDispatch()
+  // location
+  const location = useLocation()
 
   // 进入时根据localstorage选择主题
   useEffect(() => {
@@ -84,7 +86,7 @@ const App: React.FC = () => {
       } else if (i.children) {
         arr.push(...getRoutes(i.children, i.path + basePath))
       } else if (i.redirect) {
-        arr.push(<Route key={basePath + i.path} path={basePath + i.path} element={() => <Navigate to={i.redirect!} replace />} />)
+        arr.push(<Route key={basePath + i.path} path={basePath + i.path} element={<Navigate to={i.redirect!} replace />} />)
       }
     })
     return arr
@@ -119,10 +121,8 @@ const App: React.FC = () => {
           <LeftBar handleDayNightMode={handleDayNightMode} />
         </Col>
         {/* 内容 */}
-        <Col
-          flex="auto"
-          className="app-content"
-        >
+        <Col flex="auto" id="app-content">
+        <ToolBox hasMenuIcon={location.pathname.startsWith('/collect')} />
         <Suspense fallback={<NProgress />}>
           <Routes>
             {
