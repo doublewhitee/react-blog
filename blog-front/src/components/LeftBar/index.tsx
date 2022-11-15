@@ -1,6 +1,7 @@
-import React from 'react';
-import { Row, Col } from 'antd';
+import React, { useState } from 'react';
+import { Row, Col, Modal, Form, Input } from 'antd';
 import { createFromIconfontCN } from '@ant-design/icons';
+import { useAppSelector } from '../../redux/hooks';
 import './index.less';
 
 import ModeBadge from '../ModeBadge';
@@ -20,6 +21,10 @@ interface LeftBarProps {
 
 const LeftBar: React.FC<LeftBarProps> = props => {
   const { hasBadge, handleDayNightMode } = props
+  // 登陆状态
+  const isLogin = useAppSelector(state => state.user.isLogin)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const handleClickAccount = (url: string) => {
     window.open(url)
   }
@@ -29,7 +34,14 @@ const LeftBar: React.FC<LeftBarProps> = props => {
       {
         hasBadge ? <ModeBadge handleClickBadge={handleDayNightMode} /> : null
       }
-      <img src={avatar} alt="avatar" className="avatar" />
+      <div className="avatar-con">
+        <img src={avatar} alt="avatar" className="avatar" />
+        <div
+          className="avatar-bagde"
+          onClick={() => setIsModalOpen(true)}
+          style={{ backgroundColor: isLogin ? 'var(--success-color)' : 'var(--info-color)' }}
+        />
+      </div>
       <div className="user-info">
         <div className="user-name">{userInfo.username}</div>
         <div className="user-desc">{userInfo.desc}</div>
@@ -67,6 +79,30 @@ const LeftBar: React.FC<LeftBarProps> = props => {
       <Row>
         <Col span={24}><InlineMenu /></Col>
       </Row>
+
+      <Modal
+        title="用户登录"
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+      >
+        <Form>
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: '请输入用户名' }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: '请输入密码' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

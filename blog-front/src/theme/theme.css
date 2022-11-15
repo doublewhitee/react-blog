@@ -8,6 +8,8 @@
   --progress-color: #deecf1;
   --sub-menu-color: #deecf1;
   --menu-select-color: #f0f9fd;
+  --success-color: #80d284;
+  --info-color: #d3d3d3;
 }
 
 .night {
@@ -20,4 +22,6 @@
   --progress-color: #898991;
   --sub-menu-color: #2d2d2d;
   --menu-select-color: #4d4d4d;
+  --success-color: #388e3c;
+  --info-color: #b4b4b4;
 }

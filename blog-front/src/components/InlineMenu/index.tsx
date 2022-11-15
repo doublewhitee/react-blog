@@ -50,6 +50,7 @@ const InlineMenu: React.FC = () => {
         onClick={handleClickMenu}
         style={{ width: 'calc(100%)' }}
         defaultSelectedKeys={[location.pathname]}
+        selectedKeys={[location.pathname]}
         defaultOpenKeys={[`/${location.pathname.split('/')[1]}`]}
         mode="inline"
         items={items}
