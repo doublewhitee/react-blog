@@ -4,7 +4,7 @@ import './index.less';
 
 const { Meta } = Card;
 
-const Article:React.FC = () => {
+const Article: React.FC = () => {
   return (
     <div className="article">
       <Card

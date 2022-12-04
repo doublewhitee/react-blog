@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowUpOutlined, UnorderedListOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { useLocation } from 'react-router-dom';
+
 import './index.less';
 
 interface ToolBoxProps {
@@ -9,8 +11,12 @@ interface ToolBoxProps {
 const ToolBox: React.FC<ToolBoxProps> = props => {
   const { hasMenuIcon } = props
 
+  const location = useLocation()
+
   const [pagePercentage, setPagePercentage] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
+  const [scrollTimer, setScrollTimer] = useState<NodeJS.Timer>()
+  const [scrollDirection, setScrollDirection] = useState<'none' | 'top' | 'bottom'>('none')
 
   useEffect(() => {
     const app = document.getElementById('app-content')!
@@ -20,38 +26,58 @@ const ToolBox: React.FC<ToolBoxProps> = props => {
     }
   }, [])
 
+  // 切换页面，重置页面进度至页面顶端
+  useEffect(() => {
+    const app = document.getElementById('app-content')!
+    setScrollDirection('none')
+    app.scrollTop = 0
+  }, [location])
+
+  useEffect(() => {
+    const app = document.getElementById('app-content')!
+    // 不论在任何情况下，首先清空定时器
+    clearInterval(scrollTimer)
+    if (scrollDirection === 'top') {
+      // 回到顶部
+      const scrollToptimer = setInterval(() => {
+        let top = app.scrollTop
+        var speed = top / 4
+        if (app.scrollTop !== 0) {
+          app.scrollTop -= speed
+        }
+        if (top === 0) {
+          setScrollDirection('none')
+        }
+      }, 30)
+      setScrollTimer(scrollToptimer)
+    } else if (scrollDirection === 'bottom') {
+      // 回到底部
+      const scrollBottomtimer = setInterval(() => {
+        let height = app.scrollHeight
+        let top = app.scrollTop
+        const speed = Math.max(Math.ceil(height - top - app.clientHeight), 20) / 4
+        if (Math.ceil(app.scrollTop + app.clientHeight) !== app.scrollHeight) {
+          app.scrollTop += speed
+        }
+        if (Math.ceil(app.scrollTop + app.clientHeight) >= app.scrollHeight) {
+          setScrollDirection('none')
+        }
+      }, 30)
+      setScrollTimer(scrollBottomtimer)
+    }
+  }, [scrollDirection])
+
   const handleScroll = (e: Event) => {
     const { clientHeight, scrollHeight, scrollTop } = e.target as HTMLElement
-    setPagePercentage(Math.ceil(scrollTop / (scrollHeight - clientHeight) * 100))
+    setPagePercentage(clientHeight === scrollHeight ? 0 : Math.ceil(scrollTop / (scrollHeight - clientHeight) * 100))
   }
 
   const handleGoTop = () => {
-    const app = document.getElementById('app-content')!
-    const scrollToptimer = setInterval(() => {
-      let top = app.scrollTop
-      var speed = top / 4
-      if (app.scrollTop !== 0) {
-        app.scrollTop -= speed
-      }
-      if (top === 0) {
-        clearInterval(scrollToptimer)
-      }
-    }, 30)
+    setScrollDirection('top')
   }
 
   const handleGoBottom = () => {
-    const app = document.getElementById('app-content')!
-    const scrollToptimer = setInterval(() => {
-      let height = app.scrollHeight
-      let top = app.scrollTop
-      const speed = Math.max(Math.ceil(height - top - app.clientHeight), 20) / 4
-      if (app.scrollTop < app.scrollHeight) {
-        app.scrollTop += speed
-      }
-      if (app.scrollTop + app.clientHeight >= app.scrollHeight) {
-        clearInterval(scrollToptimer)
-      }
-    }, 30)
+    setScrollDirection('bottom')
   }
 
   const handleClickMainBox = () => {

@@ -1,4 +1,5 @@
 .inline-menu {
+  text-align: left;
   .ant-menu, .ant-menu-root, .ant-menu-light {
     background: var(--background-color);
     color: var(--text-color);
@@ -16,5 +17,18 @@
   }
   .ant-menu-item-selected {
     background-color: var(--menu-select-color) !important;
+    color: var(--text-color);
+  }
+  .ant-menu-item-active {
+    color: var(--text-color) !important;
+  }
+  .ant-menu-submenu-selected {
+    color: var(--text-color) !important;
+  }
+  .ant-menu-submenu-selected >.ant-menu-submenu-title {
+    color: var(--text-color) !important;
+  }
+  .ant-menu-submenu-active >.ant-menu-submenu-title {
+    color: var(--text-color) !important;
   }
 }
