@@ -1,7 +1,7 @@
 'use strict';
 
-import mongoose from 'mongoose'
-import config from 'config'
+import mongoose from 'mongoose';
+import config from 'config';
 
 mongoose.connect(config.url, { useNewUrlParser: true, useUnifiedTopology: true })
 const conn = mongoose.connection

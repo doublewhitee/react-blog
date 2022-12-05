@@ -1,5 +1,23 @@
 {
   "port": 3333,
   "host": "127.0.0.1",
-  "url": "mongodb://localhost:27017/blog"
+  "url": "mongodb://localhost:27017/blog",
+  "secret": [
+    "-----BEGIN RSA PRIVATE KEY-----",
+    "MIICXQIBAAKBgQC0w036ClSD0LvxPROMun0u022ROJlZE6P3m+gjq3gpi4n7lo8j",
+    "hTqMqgccDbVJqnIfMzWS9O3lnlQXWTxJ3B4XJ52FAcriY5brOXUVgBLx5QMHLLd1",
+    "gtJnmG4i7r4ytgX7XVKRnojR6zca1YnS0lbGGDF1CGllB1riNrdksSQP+wIDAQAB",
+    "AoGAIOyl6lIxXKULZoBKbEqXfIz0GwxlGg1ywyn5mW2lAGQzKMken0ioBnD9xIVW",
+    "rOlHyhkIvBCyuC0jgfE2Avn93MlB3j0WRuXMFlJpCBlEklMilO9Zgmwl+vTB3VZb",
+    "8VzdrEEEUBio7LWP/KvSo+IFlNjDTKgAczbLTwAmj4w6g0ECQQDm4yxPdxcU2ywZ",
+    "7PyjIMM9qnSah9KcrjU8gjEyHsUpgTjhw1cx7Peo+vRiHqxDy1yaSu1BlwRR52pC",
+    "jKNnl0QhAkEAyGx3NxEIiLk2oXGGbIMZ4P6geC8gYu01BiRNWVf0Yi7+sCH68eUP",
+    "oI+G5bJ8bvzXpvHjQi0s2OlRfct/qtPQmwJBALa+2DONbxdy4lUi3lO/esk0QVaO",
+    "aoTY3gomggnJkQRo4zzOABXkGaIF/6gp3u9J5uG4rFFd1m19XP2Pk0ZK1AECQBYi",
+    "lJAKW4zuF7CA3z3AxOzqckKTwdnrJL4G6FwDsMPfONWvCw4IJE+xSk64BbIkTpTr",
+    "hhPa9WcHba6c+P6e4h0CQQDWeGMMpkqPG/w4afNCGmvRnM8vNkGUAmDGvCsfkTID",
+    "ijpKl5SD55hPHsWE5rsv1TLUpkWtrFBcg61bHwMUP3cv",
+    "-----END RSA PRIVATE KEY-----"
+  ],
+  "jwt_key": "kH6rAJ0mOpIC7VXT"
 }
