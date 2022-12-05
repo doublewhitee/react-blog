@@ -25,19 +25,13 @@ export const userSlice = createSlice({
   reducers: {
     setRoute: (state, action: PayloadAction<RoutersObj[]>) => {
       state.routesList = [...action.payload]
+    },
+    setLoginStatus: (state, action: PayloadAction<boolean>) => {
+      state.isLogin = action.payload
     }
-    // increment: state => {
-    //   state.value += 1
-    // },
-    // decrement: state => {
-    //   state.value -= 1
-    // },
-    // incrementByAmount: (state, action: PayloadAction<number>) => {
-    //   state.value += action.payload
-    // }
   }
 })
 
-export const { setRoute } = userSlice.actions
+export const { setRoute, setLoginStatus } = userSlice.actions
 
 export default userSlice.reducer

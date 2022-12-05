@@ -2,6 +2,7 @@ import { lazy } from 'react';
 
 const Home = lazy(() => import('../pages/Home'));
 const Tags = lazy(() => import('../pages/Tags'));
+const Archives = lazy(() => import('../pages/Archives'));
 
 interface RoutersObj {
   path: string
@@ -27,7 +28,7 @@ export const defaultRoutes: RoutersObj[] = [
         path: '/archives',
         name: '归档',
         title: 'Archives',
-        element: Tags
+        element: Archives
       },
       {
         path: '/categories',
@@ -47,6 +48,15 @@ export const defaultRoutes: RoutersObj[] = [
     path: '*',
     redirect: '/'
   }
+]
+
+export const adminRoutes: RoutersObj[] = [
+  {
+    path: '/admin',
+    name: '管理',
+    title: 'Admin',
+    element: Home
+  },
 ]
 
 export const getRoutesInfo = (router: RoutersObj[], basePath: string) => {

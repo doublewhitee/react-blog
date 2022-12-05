@@ -23,3 +23,12 @@ export const defaultPageTheme = {
   isDarkMode: false,
   theme: 'light-blue'
 }
+
+export const secret = [
+  "-----BEGIN PUBLIC KEY-----",
+  "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0w036ClSD0LvxPROMun0u022R",
+  "OJlZE6P3m+gjq3gpi4n7lo8jhTqMqgccDbVJqnIfMzWS9O3lnlQXWTxJ3B4XJ52F",
+  "AcriY5brOXUVgBLx5QMHLLd1gtJnmG4i7r4ytgX7XVKRnojR6zca1YnS0lbGGDF1",
+  "CGllB1riNrdksSQP+wIDAQAB",
+  "-----END PUBLIC KEY-----"
+]

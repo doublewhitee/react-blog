@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './App.less';
 
@@ -11,8 +11,8 @@ import ToolBox from './components/ToolBox';
 
 import storage from './utils/storage';
 import { defaultPageTheme } from './config';
-import { defaultRoutes, getRoutesInfo } from './config/router';
-import { useAppDispatch } from './redux/hooks';
+import { defaultRoutes, adminRoutes, getRoutesInfo } from './config/router';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { setRoute } from './redux/reducers/userSlice';
 
 interface Setting {
@@ -35,8 +35,10 @@ const App: React.FC = () => {
   const [routesList, setRoutesList] = useState<JSX.Element[]>([])
   // redux
   const dispatch = useAppDispatch()
+  const isLogin = useAppSelector(state => state.user.isLogin)
   // location
   const location = useLocation()
+  const navigate = useNavigate()
 
   // 进入时根据localstorage选择主题
   useEffect(() => {
@@ -55,11 +57,26 @@ const App: React.FC = () => {
         app.classList.add(setting.theme)
       }
     }
-    // 路由初始化
-    setRoutesList(getRoutes(defaultRoutes, ''))
-    // 路由信息传递给redux
-    dispatch(setRoute(getRoutesInfo(defaultRoutes, '')))
   }, [])
+
+  // 登陆状态发生变化时更新路由信息
+  useEffect(() => {
+    if (isLogin) {
+      // 路由初始化
+      setRoutesList([...getRoutes(defaultRoutes, ''), ...getRoutes(adminRoutes, '')])
+      // 路由信息传递给redux
+      dispatch(setRoute([...getRoutesInfo(defaultRoutes, ''), ...getRoutesInfo(adminRoutes, '')]))
+    } else {
+      // 只加载基本路由
+      setRoutesList(getRoutes(defaultRoutes, ''))
+      // 路由信息传递给redux
+      dispatch(setRoute(getRoutesInfo(defaultRoutes, '')))
+      // 如果当前路由以admin开头，则跳转到首页
+      if (location.pathname.startsWith('/admin')) {
+        navigate('/', { replace: true })
+      }
+    }
+  }, [isLogin])
 
   // 修改日间/夜间模式
   const handleDayNightMode = () => {

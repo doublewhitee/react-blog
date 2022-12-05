@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { Row, Col, Modal, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Row, Col, Modal, Form, Input, message } from 'antd';
 import { createFromIconfontCN } from '@ant-design/icons';
-import { useAppSelector } from '../../redux/hooks';
+import Cookies from 'js-cookie';
 import './index.less';
 
 import ModeBadge from '../ModeBadge';
 import InlineMenu from '../InlineMenu';
 
 import { userInfo } from '../../config';
+import { reqLogin } from '../../api/user';
+import { setEncrypt } from '../../utils/secret';
+import { useAppSelector, useAppDispatch } from '../../redux/hooks';
+import { setLoginStatus } from '../../redux/reducers/userSlice';
 const avatar = require(`../../assets/${userInfo.avatar}`)
 
 const IconFont = createFromIconfontCN({
@@ -21,12 +25,56 @@ interface LeftBarProps {
 
 const LeftBar: React.FC<LeftBarProps> = props => {
   const { hasBadge, handleDayNightMode } = props
-  // 登陆状态
+  // redux
+  const dispatch = useAppDispatch()
   const isLogin = useAppSelector(state => state.user.isLogin)
+
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [form] = Form.useForm()
+
+  // 初次加载时，redux初始化登陆状态
+  useEffect(() => {
+    const token = Cookies.get('token')
+    if (token) {
+      dispatch(setLoginStatus(true))
+    }
+  }, [])
 
   const handleClickAccount = (url: string) => {
     window.open(url)
+  }
+
+  const handleOpenLoginModal = () => {
+    if (!isLogin) {
+      setIsModalOpen(true)
+      form.resetFields()
+    } else {
+      Modal.confirm({
+        title: '退出登录',
+        content: '您确认要退出登录吗？',
+        cancelText: '取消',
+        okText: '确定',
+        onOk: () => {
+          dispatch(setLoginStatus(false))
+          Cookies.remove('token')
+          message.success('退出登陆成功！')
+        }
+      })
+    }
+  }
+
+  const handleLogin = () => {
+    form.validateFields().then(async () => {
+      const { username, password } = form.getFieldsValue()
+      const res = await reqLogin(username, setEncrypt(password))
+      // 登陆成功，设置cookie
+      if (res.data.status === 1) {
+        message.success('登陆成功！')
+        Cookies.set('token', res.data.token, { expires: 1 })
+        dispatch(setLoginStatus(true))
+        setIsModalOpen(false)
+      }
+    })
   }
 
   return (
@@ -38,7 +86,7 @@ const LeftBar: React.FC<LeftBarProps> = props => {
         <img src={avatar} alt="avatar" className="avatar" />
         <div
           className="avatar-bagde"
-          onClick={() => setIsModalOpen(true)}
+          onClick={handleOpenLoginModal}
           style={{ backgroundColor: isLogin ? 'var(--success-color)' : 'var(--info-color)' }}
         />
       </div>
@@ -83,21 +131,30 @@ const LeftBar: React.FC<LeftBarProps> = props => {
       <Modal
         title="用户登录"
         open={isModalOpen}
-        onOk={() => setIsModalOpen(false)}
+        onOk={handleLogin}
         onCancel={() => setIsModalOpen(false)}
+        okText="确认"
+        cancelText="取消"
       >
-        <Form>
+        <Form
+          form={form}
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+        >
           <Form.Item
-            label="Username"
+            label="用户名"
             name="username"
             rules={[{ required: true, message: '请输入用户名' }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
-            label="Password"
+            label="密码"
             name="password"
-            rules={[{ required: true, message: '请输入密码' }]}
+            rules={[
+              { required: true, message: '请输入密码' },
+              { pattern: new RegExp(/^([a-zA-Z0-9]{6,20})$/, 'g'), message: '密码应由6-20位的大小写字母和数字组成' }
+            ]}
           >
             <Input.Password />
           </Form.Item>
