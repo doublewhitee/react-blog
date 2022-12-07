@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './App.less';
 
@@ -38,7 +38,6 @@ const App: React.FC = () => {
   const isLogin = useAppSelector(state => state.user.isLogin)
   // location
   const location = useLocation()
-  const navigate = useNavigate()
 
   // 进入时根据localstorage选择主题
   useEffect(() => {
@@ -71,10 +70,6 @@ const App: React.FC = () => {
       setRoutesList(getRoutes(defaultRoutes, ''))
       // 路由信息传递给redux
       dispatch(setRoute(getRoutesInfo(defaultRoutes, '')))
-      // 如果当前路由以admin开头，则跳转到首页
-      if (location.pathname.startsWith('/admin')) {
-        navigate('/', { replace: true })
-      }
     }
   }, [isLogin])
 

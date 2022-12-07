@@ -2,6 +2,9 @@ import axios from 'axios';
 import { message } from 'antd';
 import Cookies from 'js-cookie';
 
+import store from '../redux/store';
+import { setLoginStatus } from '../redux/reducers/userSlice';
+
 export const instance = axios.create({
   baseURL: 'http://localhost:3333/',
   timeout: 10000,
@@ -28,4 +31,11 @@ instance.interceptors.response.use(res => {
     }
   }
   return res
+}, err => {
+  message.error(err.response.data)
+  // token 无效，退出登录
+  if (err.response.status === 401) {
+    store.dispatch(setLoginStatus(false))
+    Cookies.remove('token')
+  }
 })
