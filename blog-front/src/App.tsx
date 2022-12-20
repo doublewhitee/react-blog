@@ -13,7 +13,7 @@ import storage from './utils/storage';
 import { defaultPageTheme } from './config';
 import { defaultRoutes, adminRoutes, getRoutesInfo } from './config/router';
 import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { setRoute } from './redux/reducers/userSlice';
+import { setRoute, setIsDarkMode } from './redux/reducers/userSlice';
 
 interface Setting {
   isDarkMode: boolean
@@ -52,6 +52,7 @@ const App: React.FC = () => {
       setSettings(setting)
       if (setting.isDarkMode) {
         app.classList.add('night')
+        dispatch(setIsDarkMode(true))
       } else {
         app.classList.add(setting.theme)
       }
@@ -80,6 +81,7 @@ const App: React.FC = () => {
     const isDarkMode = setting.isDarkMode
     storage.save('setting', { ...setting, isDarkMode: !isDarkMode })
     setSettings({ ...setting, isDarkMode: !isDarkMode })
+    dispatch(setIsDarkMode(!isDarkMode))
     if (isDarkMode) {
       app.classList.remove('night')
       app.classList.add(setting.theme)
@@ -133,15 +135,15 @@ const App: React.FC = () => {
           <LeftBar handleDayNightMode={handleDayNightMode} />
         </Col>
         {/* 内容 */}
-        <Col flex="auto" id="app-content">
-        <ToolBox hasMenuIcon={location.pathname.startsWith('/collect')} />
-        <Suspense fallback={<NProgress />}>
-          <Routes>
-            {
-              routesList.map(i => i)
-            }
-          </Routes>
-        </Suspense>
+        <Col xs={24} sm={24} md={16} lg={18} xl={18} xxl={20} id="app-content">
+          <ToolBox hasMenuIcon={location.pathname.startsWith('/collect')} />
+          <Suspense fallback={<NProgress />}>
+            <Routes>
+              {
+                routesList.map(i => i)
+              }
+            </Routes>
+          </Suspense>
         </Col>
       </Row>
     </div>
