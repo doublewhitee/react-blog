@@ -3,7 +3,8 @@ import { lazy } from 'react';
 const Home = lazy(() => import('../pages/Home'));
 const Tags = lazy(() => import('../pages/Collect/Tags'));
 const Archives = lazy(() => import('../pages/Collect/Archives'));
-const Admin = lazy(() => import('../pages/Admin'));
+const Articles = lazy(() => import('../pages/Admin/Article'));
+const Work = lazy(() => import('../pages/Admin/Work'));
 
 interface RoutersObj {
   path: string
@@ -55,15 +56,21 @@ export const adminRoutes: RoutersObj[] = [
   {
     path: '/admin',
     name: '管理',
-    title: 'Admin',
-    element: Admin
+    children: [
+      {
+        path: '/articles',
+        name: '文章管理',
+        title: 'AdminArticles',
+        element: Articles
+      },
+    ]
   },
 ]
 
 export const getRoutesInfo = (router: RoutersObj[], basePath: string) => {
   let res: RoutersObj[] = []
   router.forEach(i => {
-    if (i.element) {
+    if (i.element && i.name) {
       res.push({ path: basePath + i.path, name: i.name })
     } else if (i.children) {
       const children = getRoutesInfo(i.children, i.path)
