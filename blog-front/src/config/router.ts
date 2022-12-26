@@ -63,6 +63,10 @@ export const adminRoutes: RoutersObj[] = [
         title: 'AdminArticles',
         element: Articles
       },
+      {
+        path: '/work',
+        element: Work
+      }
     ]
   },
 ]

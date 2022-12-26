@@ -33,4 +33,22 @@
     border-radius: 2px;
     background-color: var(--progress-color);
   }
+
+  // input style
+  input[type="text"], textarea {
+    background-color: var(--sub-background-color);
+    color: var(--text-color);
+    border-color: var(--sub-text-color);
+  }
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--sub-text-color);
+    opacity: 1; /* Firefox */
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--sub-text-color);
+  }
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--sub-text-color);
+  }
+  
 }
