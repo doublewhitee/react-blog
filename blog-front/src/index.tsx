@@ -2,6 +2,8 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import store from '@redux/store';
 import { Provider } from 'react-redux';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
 import './index.less';
 
 import App from './App';
@@ -12,7 +14,9 @@ const root = createRoot(document.getElementById('root')!);
 root.render(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <ConfigProvider locale={zhCN}>
+        <App />
+      </ConfigProvider>
     </BrowserRouter>
   </Provider>
 );

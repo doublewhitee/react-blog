@@ -107,8 +107,7 @@ const TagModal: React.FC<TagModalProps> = props => {
       title="编辑标签"
       open={isModalVisible}
       width={420}
-      cancelText="取消"
-      okText="确认"
+      footer={null}
       onCancel={() => setIsModalVisible(false)}
     >
       <AutoComplete

@@ -32,3 +32,12 @@ export const secret = [
   "CGllB1riNrdksSQP+wIDAQAB",
   "-----END PUBLIC KEY-----"
 ]
+
+// 采用github仓库存储图片
+export const picHostInfo = {
+  owner: 'owner', // The account owner of the repository
+  repo: 'repo', // The name of the repository
+  message: 'add new image', // The commit message
+  token: 'your token', // https://github.com/settings/tokens
+  baseAddr: 'https://raw.githubusercontent.com/owner/repo/master/'
+}
