@@ -3,17 +3,17 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Col, Row } from 'antd';
 import './App.less';
 
-import TopBar from './components/TopBar';
-import LeftBar from './components/LeftBar';
-import NProgress from './components/NProgress';
-import Drawer from './components/Drawer';
-import ToolBox from './components/ToolBox';
+import TopBar from '@components/TopBar';
+import LeftBar from '@components/LeftBar';
+import NProgress from '@components/NProgress';
+import Drawer from '@components/Drawer';
+import ToolBox from '@components/ToolBox';
 
-import storage from './utils/storage';
-import { defaultPageTheme } from './config';
-import { defaultRoutes, adminRoutes, getRoutesInfo } from './config/router';
-import { useAppDispatch, useAppSelector } from './redux/hooks';
-import { setRoute, setIsDarkMode } from './redux/reducers/userSlice';
+import storage from '@utils/storage';
+import { defaultPageTheme } from '@config/index';
+import { defaultRoutes, adminRoutes, getRoutesInfo } from '@config/router';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { setRoute, setIsDarkMode } from '@redux/reducers/userSlice';
 
 interface Setting {
   isDarkMode: boolean

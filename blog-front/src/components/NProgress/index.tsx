@@ -3,7 +3,7 @@ import 'nprogress/nprogress.css';
 
 const nprogress = require('nprogress');
 
-const NProgress: React.FC = props => {
+const NProgress: React.FC = () => {
   useEffect(() => {
     nprogress.start()
     return () => {

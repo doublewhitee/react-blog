@@ -3,7 +3,7 @@ import { Modal, AutoComplete, Input, Form, Tag, Empty, message } from 'antd';
 import { CloseOutlined }  from '@ant-design/icons';
 import _ from 'lodash';
 
-import { reqTagList, reqAddTag, reqDeleteTag } from '../../../../../api/admin';
+import { reqTagList, reqAddTag, reqDeleteTag } from '@api/admin';
 
 interface TagModalProps {
   isModalVisible: boolean

@@ -23,5 +23,6 @@
   "include": [
     "src",
     "src/img.d.ts"
-  ]
+  ],
+  "extends": "./tsconfig.extend.json"
 }

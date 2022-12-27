@@ -7,12 +7,12 @@ import './index.less';
 import ModeBadge from '../ModeBadge';
 import InlineMenu from '../InlineMenu';
 
-import { userInfo } from '../../config';
-import { reqLogin } from '../../api/user';
-import { setEncrypt } from '../../utils/secret';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { setLoginStatus } from '../../redux/reducers/userSlice';
-const avatar = require(`../../assets/${userInfo.avatar}`)
+import { userInfo } from '@config/index';
+import { reqLogin } from '@api/user';
+import { setEncrypt } from '@utils/secret';
+import { useAppSelector, useAppDispatch } from '@redux/hooks';
+import { setLoginStatus } from '@redux/reducers/userSlice';
+const avatar = require(`@assets/${userInfo.avatar}`)
 
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_3307767_9o41ucoy8as.js',

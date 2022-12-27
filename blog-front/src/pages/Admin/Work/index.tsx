@@ -6,8 +6,8 @@ import 'vditor/src/assets/less/index.less';
 
 import TagModal from './Components/TagModal';
 
-import { useAppSelector } from '../../../redux/hooks';
-import { reqTagList, reqAddTag, reqDeleteTag } from '../../../api/admin';
+import { useAppSelector } from '@redux/hooks';
+import { reqTagList, reqAddTag, reqDeleteTag } from '@api/admin';
 
 import './index.less';
 

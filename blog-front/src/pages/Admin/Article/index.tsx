@@ -3,8 +3,8 @@ import { Table, Button, Input } from 'antd';
 import { PlusOutlined }  from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
-import { useAppSelector } from '../../../redux/hooks';
-import { reqArticleList } from '../../../api/collect';
+import { useAppSelector } from '@redux/hooks';
+import { reqArticleList } from '@api/collect';
 
 import './index.less';
 
@@ -58,7 +58,7 @@ const Admin: React.FC = () => {
           placeholder="请输入搜索内容"
           style={{ width: 304 }}
         />
-        <Button icon={<PlusOutlined />} type="primary" onClick={() => navigate('/admin/work')}>新建</Button>
+        <Button icon={<PlusOutlined />} type="primary" onClick={() => navigate('/admin/articles-work')}>新建</Button>
       </div>
       <Table dataSource={dataSource} columns={columns} />
     </div>

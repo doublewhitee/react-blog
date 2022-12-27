@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu } from 'antd';
-import './index.less'
+import './index.less';
 
-import { useAppSelector } from '../../redux/hooks';
+import { useAppSelector } from '@redux/hooks';
 
 interface ItemObj {
   label: string
@@ -49,8 +49,8 @@ const InlineMenu: React.FC = () => {
       <Menu
         onClick={handleClickMenu}
         style={{ width: 'calc(100%)' }}
-        defaultSelectedKeys={[location.pathname]}
-        selectedKeys={[location.pathname]}
+        defaultSelectedKeys={[location.pathname.split('-')[0]]}
+        selectedKeys={[location.pathname.split('-')[0]]}
         defaultOpenKeys={[`/${location.pathname.split('/')[1]}`]}
         mode="inline"
         items={items}
