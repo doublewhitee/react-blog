@@ -18,12 +18,14 @@ const TagModal: React.FC<TagModalProps> = props => {
   const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
+    // 弹窗开启时，初始化并清空搜索内容
     if (isModalVisible) {
       setSearchText('')
       handleReqTagList()
     }
   }, [isModalVisible])
 
+  // 获取Tag列表
   const handleReqTagList = async (search: string = '') => {
     const res = await reqTagList(search)
     const arr = res.data?.data
@@ -31,19 +33,21 @@ const TagModal: React.FC<TagModalProps> = props => {
     setTagOptions(tags)
   }
 
+  // 防抖
   const debounceSearchTag = useCallback(
     _.debounce(async (value) => {
       handleReqTagList(value)
     }, 500)
   , [])
 
+  // 搜索文本改变时，进行防抖搜索
   const handleSearchTag = async (value: string) => {
     setSearchText(value.trim())
     debounceSearchTag(value.trim())
   }
 
+  // 添加标签到已选
   const handleSelectTag = (value: string, option: any) => {
-    console.log(value, option)
     if (!tagList.some(i => i.value === value)) {
       setTagList(arr => [...arr, { value: option.value, label: option.name }])
     } else {
@@ -51,24 +55,24 @@ const TagModal: React.FC<TagModalProps> = props => {
     }
   }
 
+  // 新增标签
   const handleAddTag = async (_: string, e: React.ChangeEvent<HTMLInputElement> | React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLInputElement> | undefined) => {
     if (e) e.preventDefault()
     const res = await reqAddTag(searchText)
     if (res.data.status && res.data.status === 1) {
       message.success(res.data.message)
+      setSearchText('')
+      handleReqTagList()
       setTagList(arr => [...arr, { value: res.data.data._id, label: res.data.data.name }])
     }
-    setSearchText('')
-    handleReqTagList()
   }
 
+  // 删除标签
   const handleDeleteTag = (key: string, e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     e.stopPropagation()
     Modal.confirm({
       title: '删除标签',
       content: `确定删除这个标签吗？（所有文章中的该标签都将被删除）`,
-      cancelText: '取消',
-      okText: '确定',
       async onOk() {
         const res = await reqDeleteTag(key)
         if (res.data.status && res.data.status === 1) {

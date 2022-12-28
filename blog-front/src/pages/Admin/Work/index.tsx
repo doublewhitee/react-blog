@@ -11,6 +11,7 @@ import TagModal from './Components/TagModal';
 import { useAppSelector } from '@redux/hooks';
 import { uploadFile } from '@api/upload';
 import { picHostInfo } from '@config/index';
+import { reqCategoryList, reqAddCategory } from '@api/admin';
 
 import './index.less';
 
@@ -27,6 +28,7 @@ const Work: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]) // 上传文件列表
   const [uploadLoading, setUploadLoading] = useState(false)
   const [categoryOptions, setCategoryOptions] = useState<{ value: string, label: string }[]>([])
+  const [categoryNameValue, setCategoryNameValue] = useState('')
   const [tagList, setTagList] = useState<{ value: string, label: string }[]>([])
 
   useEffect(() => {
@@ -66,10 +68,15 @@ const Work: React.FC = () => {
     }
   }, [isDarkMode, vd])
 
-  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    setTitle(value)
-  }
+  // 开启Modal时请求分类列表，并设置options
+  useEffect(() => {
+    if (isModalVisible) {
+      handleReqCategoryList()
+      // 清空之前填写的信息
+      form.setFieldsValue({ cover: undefined, category: undefined, lock: false })
+      setTagList([])
+    }
+  }, [isModalVisible])
 
   // beforeCrop中进行png格式校验
   const handleBeforeCrop = (file: RcFile) => {
@@ -120,6 +127,29 @@ const Work: React.FC = () => {
     }
   }
 
+  // 获取分类列表
+  const handleReqCategoryList = async () => {
+    const res = await reqCategoryList()
+    const data = res.data.data
+    const options: { value: string, label: string }[] = []
+    data.map((i: { name: string, _id: string }) => options.push({ value: i._id, label: i.name }))
+    setCategoryOptions(options)
+  }
+
+  // 新增分类
+  const handleAddCategory = async () => {
+    if (categoryNameValue.trim().length === 0) {
+      message.error('分类名不能为空')
+    } else {
+      const res = await reqAddCategory(categoryNameValue.trim())
+      if (res.data.status && res.data.status === 1) {
+        message.success(res.data.message)
+        handleReqCategoryList()
+        setCategoryNameValue('')
+      }
+    }
+  }
+
   const handleSubmit = () => {
     console.log(form.getFieldsValue())
     form.validateFields()
@@ -131,7 +161,7 @@ const Work: React.FC = () => {
         value={title}
         size="large"
         placeholder="请输入文章标题（1-100个字）"
-        onChange={handleChangeTitle}
+        onChange={(e) => setTitle(e.target.value)}
       />
       <div className="admin-work-editor">
         <div id="vditor" className="vditor" />
@@ -160,7 +190,7 @@ const Work: React.FC = () => {
                 listType="picture-card"
                 fileList={fileList}
                 maxCount={1}
-                onRemove={() => setFileList([])}
+                onRemove={() => { setFileList([]); form.setFieldValue('cover', undefined); }}
               >
                 <div>
                   {uploadLoading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -173,15 +203,15 @@ const Work: React.FC = () => {
           <Form.Item name="category" label="分类" rules={[{ required: true, message: '请选择分类' }]}>
             <Select
               options={categoryOptions}
+              showSearch
+              optionFilterProp="label"
               dropdownRender={(menu) => (
                 <>
                   {menu}
                   <Divider style={{ margin: '8px 0' }} />
                   <Space style={{ padding: '0 8px 4px' }}>
-                    <Input
-                      placeholder="请输入分类名"
-                    />
-                    <Button type="text" icon={<PlusOutlined />} onClick={() => {}}>
+                    <Input value={categoryNameValue} placeholder="请输入分类名" onChange={(e) => setCategoryNameValue(e.target.value)} />
+                    <Button type="text" icon={<PlusOutlined />} onClick={handleAddCategory}>
                       新增分类
                     </Button>
                   </Space>
@@ -211,7 +241,7 @@ const Work: React.FC = () => {
             </>
           </Form.Item>
 
-          <Form.Item name="lock" label="仅自己可见" valuePropName="checked">
+          <Form.Item name="lock" label="仅自己可见" valuePropName="checked" initialValue={false}>
             <Switch />
           </Form.Item>
         </Form>

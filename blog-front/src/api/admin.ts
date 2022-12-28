@@ -23,3 +23,19 @@ export function reqDeleteTag (id: string) {
     data: { id }
   })
 }
+
+export function reqCategoryList (page?: number) {
+  return instance({
+    url: '/admin/category-list',
+    method: 'get',
+    params: { page }
+  })
+}
+
+export function reqAddCategory (name: string, cover?: string, lock?: boolean) {
+  return instance({
+    url: '/admin/category-create',
+    method: 'post',
+    data: { name, cover, lock }
+  })
+}

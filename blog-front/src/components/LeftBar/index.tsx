@@ -52,8 +52,6 @@ const LeftBar: React.FC<LeftBarProps> = props => {
       Modal.confirm({
         title: '退出登录',
         content: '您确认要退出登录吗？',
-        cancelText: '取消',
-        okText: '确定',
         onOk: () => {
           dispatch(setLoginStatus(false))
           Cookies.remove('token')
@@ -133,8 +131,6 @@ const LeftBar: React.FC<LeftBarProps> = props => {
         open={isModalOpen}
         onOk={handleLogin}
         onCancel={() => setIsModalOpen(false)}
-        okText="确认"
-        cancelText="取消"
       >
         <Form
           form={form}
