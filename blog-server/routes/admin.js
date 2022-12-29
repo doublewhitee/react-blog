@@ -7,6 +7,8 @@ const router = express.Router()
 
 // 文章列表
 router.get('/article-list', admin_controller.getArticleList)
+// 创建或更新文章
+router.post('/article-upsert', admin_controller.createOrUpdateArticle)
 
 // 标签列表
 router.get('/tag-list', admin_controller.getTagList)
